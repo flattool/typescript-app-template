@@ -15,7 +15,7 @@ declare namespace console {
 
 declare interface String {
 	format(...replacements: string[]): string
-	format(...replacements: number[]): strin
+	format(...replacements: number[]): string
 }
 declare interface Number {
 	toFixed(digits: number): number
@@ -29,6 +29,6 @@ declare const TextDecoder: {
 		decode(
 			input?: ArrayBuffer | ArrayBufferView,
 			options?: { stream?: boolean },
-		): string;
+		): string
 	}
 }
