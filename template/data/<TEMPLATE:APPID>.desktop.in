@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=<TEMPLATE:APP_TITLE>
+Comment=Flattool app template
+Exec=<TEMPLATE:APPID>
+Icon=<TEMPLATE:APPID>
+Terminal=false
+Type=Application
+Categories=Development
+Keywords=
+StartupNotify=true
+DBusActivatable=true

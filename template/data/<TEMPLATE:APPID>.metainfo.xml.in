@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+	<id><TEMPLATE:APPID></id>
+	<launchable type="desktop-id"><TEMPLATE:APPID>.desktop</launchable>
+	<metadata_license>CC0-1.0</metadata_license>
+	<project_license>GPL-3.0-or-later</project_license>
+	<translation type="gettext"><TEMPLATE:APP_NAME></translation>
+	<content_rating type="oars-1.1" />
+
+	<developer id="tld.vendor">
+		<name><TEMPLATE:DEVELOPER_NAME></name>
+	</developer>
+
+	<name><TEMPLATE:APP_NAME></name>
+	<summary>Flattool template default summary</summary>
+	<description>
+		<p>Flattool template default description</p>
+	</description>
+
+	<url type="homepage"><TEMPLATE:GIT_REPO_URL></url>
+	<url type="vcs-browser"><TEMPLATE:GIT_REPO_URL></url>
+	<url type="bugtracker"><TEMPLATE:GIT_REPO_URL>/issues</url>
+	<url type="donation"><TEMPLATE:DEVELOPER_DONATION_LINK></url>
+	<url type="contribute"><TEMPLATE:GIT_REPO_URL></url>
+
+	<branding>
+		<color type="primary" scheme_preference="light">#ffffff</color>
+		<color type="primary" scheme_preference="dark">#000000</color>
+	</branding>
+
+	<!-- <screenshots>
+		<screenshot type="default">
+			<image>https://some_url.com/an_image.png</image>
+			<caption>Flattool template default screenshot caption.</caption>
+		</screenshot>
+	</screenshots> -->
+
+	<releases>
+		<release version="0.0.1" date="<TEMPLATE:CURRENT_DATE>">
+			<description translate="no">
+				<p>Initial Release</p>
+			</description>
+		</release>
+	</releases>
+</component>

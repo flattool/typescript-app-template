@@ -1,0 +1,40 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ES2020",
+		"lib": ["ES2017"],
+		"allowJs": true,
+		"outDir": "_build/tsc-out",
+		"moduleResolution": "node",
+		"baseUrl": ".",
+		"paths": {
+			"*": ["*", "types/*", "gi-types/*"]
+		},
+		"typeRoots": ["gi-types"],
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+
+		"strict": true,
+		"alwaysStrict": true,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"strictNullChecks": true,
+		"strictBindCallApply": true,
+		"strictFunctionTypes": true,
+		"strictPropertyInitialization": true,
+		"useUnknownInCatchVariables": true,
+
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"allowUnusedLabels": false,
+		"allowUnreachableCode": false,
+
+		"noImplicitOverride": true,
+		"noImplicitReturns": true,
+
+		"noUncheckedIndexedAccess": true,
+		"noPropertyAccessFromIndexSignature": true,
+		"exactOptionalPropertyTypes": true
+	},
+	"include": ["gi-types/gi.d.ts", "types/ambient.d.ts", "src/"]
+}
