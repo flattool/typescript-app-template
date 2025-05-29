@@ -21,4 +21,8 @@ The template will create an NPM project in the new app's project directory, and 
 
 ## Configuration
 
-Most configuration is done interactively via `create_project.py`, but the GNOME runtime version and Blueprint Compiler version are kept track in `./TEMPLATE_CONFIG.json`. This file will be updated in this repo to follow GNOME releases. New options may be added in the future, so if it has been a while since the last time you created an app, it is reccomended to clone this repo again.
+Most configuration is done interactively via `create_project.py`, but the GNOME runtime version and Blueprint Compiler version are kept track in `./TEMPLATE_CONFIG.json`. This file will be updated in this repo to follow GNOME releases. New options may be added in the future, so if it has been a while since the last time you created an app, it is recommended to clone this repo again.
+
+## Credits
+
+Credit to the [GNOME Typescript Template](https://gitlab.gnome.org/World/javascript/gnome-typescript-template), for the typings in `src/types/`, original `meson.build` files, and for the overall inspiration of this template.
