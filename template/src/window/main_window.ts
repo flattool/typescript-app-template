@@ -29,8 +29,8 @@ export class MainWindow extends Adw.ApplicationWindow {
 			this.add_css_class("devel")
 		}
 
-		this.settings = new Gio.Settings({ schema_id: "<TEMPLATE:APPID>" })
+		this.settings = new Gio.Settings({ schema_id: Config.APP_ID })
 
-		print("Welcome to <TEMPLATE:APPID>!")
+		print(`Welcome to ${Config.APP_ID}!`)
 	}
 }

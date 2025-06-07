@@ -14,7 +14,7 @@ export class Application extends Adw.Application {
 
 	constructor() {
 		super({
-			application_id: "<TEMPLATE:APPID>",
+			application_id: Config.APP_ID,
 			flags: Gio.ApplicationFlags.DEFAULT_FLAGS,
 		})
 
@@ -28,7 +28,7 @@ export class Application extends Adw.Application {
 		show_about_action.connect("activate", () =>
 			new Adw.AboutDialog({
 				application_name: "<TEMPLATE:APP_TITLE>",
-				application_icon: "<TEMPLATE:APPID>",
+				application_icon: Config.APP_ID,
 				developer_name: "<TEMPLATE:DEVELOPER_NAME>",
 				version: Config.VERSION,
 				developers: ["<TEMPLATE:DEVELOPER_NAME> <<TEMPLATE:DEVELOPER_EMAIL>>"],
