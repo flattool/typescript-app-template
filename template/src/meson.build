@@ -1,24 +1,53 @@
 pkgdatadir = get_option('datadir') / meson.project_name()
 gnome = import('gnome')
 
+blueprint_compiler = find_program('blueprint-compiler')
+python = find_program('python3')
+python_blp_code = '''
+import sys
+from pathlib import Path
+import subprocess
+blp_compiler = sys.argv[1]
+src_dir = Path(sys.argv[2])
+out_dir = sys.argv[3]
+blps = [str(file.relative_to(src_dir)) for file in src_dir.rglob("*.blp")]
+subprocess.run([compiler, "batch-compile", build, src] + blps, check=True)
+''',
+
 blueprints = custom_target(
 	'blueprints',
-	input: files(
-		'gtk/help-overlay.blp',
-		'window/main_window.blp',
-	),
+	input: [],
 	output: '.',
-	command: [find_program('blueprint-compiler'), 'batch-compile', '@OUTPUT@', '@CURRENT_SOURCE_DIR@', '@INPUT@'],
+	build_by_default: true,
+	build_always_stale: true,
+	command: [
+		python,
+		'-c', python_blp_code,
+		blueprint_compiler,
+		meson.current_source_dir(),
+		meson.current_build_dir(),
+	],
 )
 
 tsc_out = meson.project_build_root() / 'tsc-out'
 
-typescript = custom_target(
+custom_target(
 	'typescript-compile',
 	build_by_default: true,
 	build_always_stale: true,
-	command: [ tsc, '-p', meson.project_source_root() / 'tsconfig.json', '--outDir', tsc_out ],
 	output: ['tsc-output'],
+	command: [
+		tsc,
+		'-p', meson.project_source_root() / 'tsconfig.json',
+		'--outDir', tsc_out,
+	],
+)
+
+install_subdir(
+	tsc_out,
+	install_dir: get_option('bindir'),
+	strip_directory: true,
+	install_tag: 'tsc-js',
 )
 
 bin_conf = configuration_data()
@@ -61,17 +90,4 @@ configure_file(
 	install: true,
 	install_dir: get_option('bindir'),
 	install_mode: ['rwxr-xr-x', 'root', 'root'],
-)
-
-src_res = gnome.compile_resources(
-	'<TEMPLATE:APPID>.src',
-	'<TEMPLATE:APPID>.src.gresources.xml',
-	gresource_bundle: true,
-	install: true,
-	install_dir: pkgdatadir,
-	source_dir: tsc_out,
-	dependencies: [
-		config_vars,
-		typescript,
-	],
 )
