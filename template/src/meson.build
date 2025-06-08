@@ -9,8 +9,8 @@ from pathlib import Path
 blp_compiler = sys.argv[1]
 src_dir = Path(sys.argv[2])
 out_dir = sys.argv[3]
-blps = [str(file.relative_to(src_dir)) for file in src_dir.rglob("*.blp")]
-subprocess.run([compiler, "batch-compile", build, src] + blps, check=True)
+blps = [str(file) for file in src_dir.rglob("*.blp")]
+subprocess.run([blp_compiler, "batch-compile", out_dir, src_dir] + blps, check=True)
 '''
 
 blueprints = custom_target(

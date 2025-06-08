@@ -14,6 +14,6 @@ imports.package.init({
 pkg.initGettext();
 pkg.initFormat();
 
-const { main } = await import("resource://@resource_path@/js/main.js");
+const { main } = await import("./main.js");
 const exit_code = await main([programInvocationName, ...programArgs]);
 exit(exit_code);

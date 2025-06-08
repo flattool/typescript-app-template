@@ -12,7 +12,7 @@ export class Config {
 
 	private static load_json(): ConfigJson {
 		const resource = Gio.resources_lookup_data(
-			"/<TEMPLATE:APPID.as_path>/js/config.json",
+			"/<TEMPLATE:APPID.as_path>/config.json",
 			Gio.ResourceLookupFlags.NONE,
 		)
 		const bytes = resource.toArray()
