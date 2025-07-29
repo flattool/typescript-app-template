@@ -10,6 +10,9 @@ imports.package.init({
 	datadir: "@datadir@",
 });
 
+pkg.profile = "@PROFILE@";
+pkg.app_id = "@APP_ID@";
+
 // Initialize translations and formatting
 pkg.initGettext();
 pkg.initFormat();
