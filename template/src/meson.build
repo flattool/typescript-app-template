@@ -67,19 +67,13 @@ else
 	bin_conf.set('VERSION', meson.project_version())
 endif
 
-config_vars = configure_file(
-	input: 'config.json.in',
-	output: 'config.json',
-	configuration: bin_conf,
-)
-
 data_res = gnome.compile_resources(
 	'<TEMPLATE:APPID>.data',
 	'<TEMPLATE:APPID>.data.gresources.xml',
 	gresource_bundle: true,
 	install: true,
 	install_dir: pkgdatadir,
-	dependencies: [blueprints, config_vars],
+	dependencies: [blueprints],
 )
 
 configure_file(

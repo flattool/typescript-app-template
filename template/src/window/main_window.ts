@@ -2,8 +2,6 @@ import GObject from "gi://GObject?version=2.0"
 import Gio from "gi://Gio?version=2.0"
 import Adw from "gi://Adw?version=1"
 
-import { Config } from "../config.js"
-
 export class MainWindow extends Adw.ApplicationWindow {
 	static {
 		GObject.registerClass(
@@ -16,21 +14,16 @@ export class MainWindow extends Adw.ApplicationWindow {
 		)
 	}
 
-	readonly toolbar_view!: Adw.ToolbarView
-	readonly header_bar!: Adw.HeaderBar
-	readonly status_page!: Adw.StatusPage
+	protected readonly toolbar_view!: Adw.ToolbarView
+	protected readonly header_bar!: Adw.HeaderBar
+	protected readonly status_page!: Adw.StatusPage
 
-	readonly settings: Gio.Settings
+	protected readonly settings = new Gio.Settings({ schema_id: pkg.app_id })
 
-	constructor(params?: Partial<Adw.ApplicationWindow.ConstructorProps>) {
+	public constructor(params?: Partial<Adw.ApplicationWindow.ConstructorProps>) {
 		super(params)
 
-		if (Config.PROFILE === "development") {
-			this.add_css_class("devel")
-		}
-
-		this.settings = new Gio.Settings({ schema_id: Config.APP_ID })
-
-		print(`Welcome to ${Config.APP_ID}!`)
+		if (pkg.profile === "development") this.add_css_class("devel")
+		print(`Welcome to ${pkg.app_id}!`)
 	}
 }

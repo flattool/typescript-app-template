@@ -4,9 +4,8 @@
 		<file preprocess="xml-stripblanks" alias="appdata">../data/<TEMPLATE:APPID>.metainfo.xml</file>
 		<file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
 		<file preprocess="xml-stripblanks">window/main_window.ui</file>
-		<file>config.json</file>
 	</gresource>
 	<gresource prefix="/<TEMPLATE:APPID.as_path>/icons/scalable/actions/">
-		<!-- <file preprocess="xml-stripblanks" alias="ignition:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file> -->
+		<!-- <file preprocess="xml-stripblanks" alias="example:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file> -->
 	</gresource>
 </gresources>
