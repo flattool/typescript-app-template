@@ -1,8 +1,0 @@
-**/.*
-**/*.d.ts
-**/__pycache__
-_build
-node_modules
-package.json
-package-lock.json
-gi-types
