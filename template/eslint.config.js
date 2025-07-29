@@ -25,7 +25,7 @@ const sharedJsTsRules = {
 	"@stylistic/function-paren-newline": ["error", "multiline-arguments"],
 	"@stylistic/generator-star-spacing": "error",
 	"@stylistic/implicit-arrow-linebreak": ["error", "beside"],
-	"@stylistic/indent": ["error", "tab", { MemberExpression: 0 }],
+	"@stylistic/indent": ["error", "tab", { MemberExpression: 0, SwitchCase: 1 }],
 	"@stylistic/indent-binary-ops": ["error", "tab"],
 	"@stylistic/key-spacing": ["error", { beforeColon: false, afterColon: true, mode: "strict" }],
 	"@stylistic/keyword-spacing": ["error", { before: true, after: true }],
