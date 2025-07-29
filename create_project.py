@@ -171,6 +171,7 @@ if __name__ == "__main__":
 		# Config Options
 		"<TEMPLATE:RUNTIME_VERSION>": config["runtime_version"],
 		"<TEMPLATE:BLUEPRINT_COMPILER_TAG>": config["blueprint_compiler_tag"],
+		"<TEMPLATE:ECMA_VERSION>": config["ecma_version"],
 
 		# Other Values
 		"<TEMPLATE:CURRENT_DATE>": datetime.now().strftime("%Y-%m-%d"),

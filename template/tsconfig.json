@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "ES2022",
-		"module": "ES2022",
-		"lib": ["ES2022"],
+		"target": "ES<TEMPLATE:ECMA_VERSION>",
+		"module": "ES<TEMPLATE:ECMA_VERSION>",
+		"lib": ["ES<TEMPLATE:ECMA_VERSION>"],
 		"allowJs": true,
 		"outDir": "_build/tsc-out",
 		"moduleResolution": "node",
