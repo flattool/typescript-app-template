@@ -17,7 +17,7 @@ cd <TEMPLATE:APP_NAME>
 git submodule update --init
 
 # Install build dependencies
-flatpak install org.flatpak.Builder org.gnome.Sdk//<TEMPLATE:RUNTIME_VERSION> org.gnome.Platform//<TEMPLATE:RUNTIME_VERSION> org.freedesktop.Sdk.Extension.node20//24.08 -y
+flatpak install org.flatpak.Builder org.gnome.Sdk//<TEMPLATE:RUNTIME_VERSION> org.gnome.Platform//<TEMPLATE:RUNTIME_VERSION> org.freedesktop.Sdk.Extension.typescript//<TEMPLATE:TYPESCRIPT_NODE_RUNTIME_VERSION> org.freedesktop.Sdk.Extension.node20//<TEMPLATE:TYPESCRIPT_NODE_RUNTIME_VERSION> -y
 
 # Build, install, and run
 ./run.sh

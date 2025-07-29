@@ -172,6 +172,7 @@ if __name__ == "__main__":
 		"<TEMPLATE:RUNTIME_VERSION>": config["runtime_version"],
 		"<TEMPLATE:BLUEPRINT_COMPILER_TAG>": config["blueprint_compiler_tag"],
 		"<TEMPLATE:ECMA_VERSION>": config["ecma_version"],
+		"<TEMPLATE:TYPESCRIPT_NODE_RUNTIME_VERSION>": config["typescript_node_runtime_version"],
 
 		# Other Values
 		"<TEMPLATE:CURRENT_DATE>": datetime.now().strftime("%Y-%m-%d"),
@@ -189,6 +190,16 @@ if __name__ == "__main__":
 		print("Initializing Git repo...")
 		subprocess.run(["git", "init", "-b", "main"], cwd=project_path, check=True)
 
+		print("Installing Flatpak runtime and sdk...")
+		subprocess.run([
+			"flatpak", "install",
+			"org.flatpak.Builder",
+			f"org.gnome.Sdk//{config['runtime_version']}",
+			f"org.gnome.Platform//{config['runtime_version']}",
+			f"org.freedesktop.Sdk.Extension.node20//{config['typescript_node_runtime_version']}",
+			f"org.freedesktop.Sdk.Extension.typescript//{config['typescript_node_runtime_version']}",
+		], check=True)
+
 		print("Adding and initializing gi-types submodule...")
 		subprocess.run([
 			"git", "submodule", "add",
@@ -197,14 +208,6 @@ if __name__ == "__main__":
 			"https://gitlab.gnome.org/BrainBlasted/gi-typescript-definitions",
 			"gi-types",
 		], cwd=project_path, check=True)
-
-		print("Installing Flatpak runtime and sdk...")
-		subprocess.run([
-			"flatpak", "install",
-			"org.flatpak.Builder",
-			f"org.gnome.Sdk//{config['runtime_version']}",
-			f"org.gnome.Platform//{config['runtime_version']}"
-		], check=True)
 	except subprocess.CalledProcessError as e:
 		err_exit(f"Init commands failed:\n{e}")
 

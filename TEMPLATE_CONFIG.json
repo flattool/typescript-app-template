@@ -1,5 +1,6 @@
 {
 	"runtime_version": "48",
 	"blueprint_compiler_tag": "v0.16.0",
-	"ecma_version": "2022"
+	"ecma_version": "2022",
+	"typescript_node_runtime_version": "24.08"
 }
