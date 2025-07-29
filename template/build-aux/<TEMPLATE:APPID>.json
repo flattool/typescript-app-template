@@ -3,10 +3,7 @@
 	"runtime": "org.gnome.Platform",
 	"runtime-version": "<TEMPLATE:RUNTIME_VERSION>",
 	"sdk": "org.gnome.Sdk",
-	"sdk-extensions": [
-		"org.freedesktop.Sdk.Extension.node20",
-		"org.freedesktop.Sdk.Extension.typescript"
-	],
+	"sdk-extensions": ["org.freedesktop.Sdk.Extension.typescript"],
 	"build-options": {
 		"append-path": "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin"
 	},
