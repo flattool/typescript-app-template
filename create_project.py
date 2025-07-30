@@ -187,9 +187,6 @@ if __name__ == "__main__":
 	install_node_packages(project_path)
 
 	try:
-		print("Initializing Git repo...")
-		subprocess.run(["git", "init", "-b", "main"], cwd=project_path, check=True)
-
 		print("Installing Flatpak runtime and sdk...")
 		subprocess.run([
 			"flatpak", "install",
@@ -200,6 +197,9 @@ if __name__ == "__main__":
 			f"org.freedesktop.Sdk.Extension.typescript//{config['typescript_node_runtime_version']}",
 		], check=True)
 
+		print("Initializing Git repo...")
+		subprocess.run(["git", "init", "-b", "main"], cwd=project_path, check=True)
+
 		print("Adding and initializing gi-types submodule...")
 		subprocess.run([
 			"git", "submodule", "add",
@@ -208,6 +208,13 @@ if __name__ == "__main__":
 			"https://gitlab.gnome.org/BrainBlasted/gi-typescript-definitions",
 			"gi-types",
 		], cwd=project_path, check=True)
+
+		subprocess.run(["git", "add", "."], cwd=project_path, check=True)
+		subprocess.run([
+			"git", "commit",
+			"-m", "Initial commit: Flattool TypeScript App Template",
+		], cwd=project_path, check=True)
+
 	except subprocess.CalledProcessError as e:
 		err_exit(f"Init commands failed:\n{e}")
 
