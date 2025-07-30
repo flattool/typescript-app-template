@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		// <!!> REQUIRED FOR THE APP TO FUNCTION <!!>
 		"target": "ES<TEMPLATE:ECMA_VERSION>",
 		"module": "ES<TEMPLATE:ECMA_VERSION>",
 		"lib": ["ES<TEMPLATE:ECMA_VERSION>"],
@@ -11,30 +12,21 @@
 			"*": ["*", "types/*", "gi-types/*"]
 		},
 		"typeRoots": ["gi-types"],
-		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 
-		"strict": true,
-		"alwaysStrict": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"strictNullChecks": true,
-		"strictBindCallApply": true,
-		"strictFunctionTypes": true,
-		"strictPropertyInitialization": true,
-		"useUnknownInCatchVariables": true,
-
-		"noUnusedLocals": true,
-		"noUnusedParameters": true,
-		"allowUnusedLabels": false,
+		// Optional Flags
 		"allowUnreachableCode": false,
-
+		"allowUnusedLabels": false,
+		"exactOptionalPropertyTypes": true,
+		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
-
-		"noUncheckedIndexedAccess": true,
 		"noPropertyAccessFromIndexSignature": true,
-		"exactOptionalPropertyTypes": true
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"skipLibCheck": true,
+		"strict": true
 	},
 	"include": ["gi-types/gi.d.ts", "types/ambient.d.ts", "src/"]
 }
