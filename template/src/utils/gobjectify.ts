@@ -291,6 +291,7 @@ export class GObjectify {
 					...specs,
 					...(params?.manual_properties && params.manual_properties),
 				},
+				Implements: params?.implements ?? [],
 			}, target)
 			signals_map.delete(target)
 
