@@ -76,13 +76,17 @@ export class GObjectify {
 
 	public static Property<T extends GObject.Object, U extends AllPropertyTypes, V>(
 		prop_type: U,
-		config?: AtleaseOneOf<PropertyConfigFor<U>>,
+		config?: AtleaseOneOf<PropertyConfigFor<U> & {
+			effect?: (this: T, val: V)=> void,
+			every_set_notifies?: boolean,
+		}>,
 	) {
 		return (
 			_target: ClassAccessorDecoratorTarget<T, V>,
 			context: ClassAccessorDecoratorContext<T, V>,
 		): ClassAccessorDecoratorResult<T, V> => {
 			const field_name = String(context.name)
+			const canonical_name = field_name.replaceAll("_", "-")
 			const spec = PropertyHelpers.resolve(field_name, prop_type, config as PropertyConfigFor<U>)
 			const set = function (this: T, value: V): void {
 				if (config?.flags === "CONSTANT") {
@@ -95,8 +99,12 @@ export class GObjectify {
 					props = {}
 					property_map.set(this, props)
 				}
+				const old_value = props[field_name]
 				props[field_name] = value
-				this.emit(`notify::${field_name.replaceAll("_", "-")}`, spec)
+				if (config?.every_set_notifies || old_value !== value) {
+					this.emit(`notify::${canonical_name}`, spec)
+				}
+				config?.effect?.call(this, value)
 			}
 			const get = function (this: T): V {
 				const my_props = property_map.get(this)
@@ -155,9 +163,10 @@ export class GObjectify {
 		context: ClassSetterDecoratorContext,
 	): (this: T, arg0: U)=> void {
 		const field_name = String(context.name)
+		const canonical_name = field_name.replaceAll("_", "-")
 		return function (this: T, value: U) {
 			target.call(this, value)
-			this.emit(`notify::${field_name.replaceAll("_", "-")}`, null)
+			this.emit(`notify::${canonical_name}`, null)
 		}
 	}
 
