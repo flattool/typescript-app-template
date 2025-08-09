@@ -130,16 +130,28 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 	], cwd=project_path, check=True)
 
 
+def ask_and_install_node_packages(project_path: Path):
+	response = get_input(
+		'Install Node packages for formatting and linting? [Y|n]',
+		is_optional=True,
+		regex=re.compile('^[YyNn]$'),
+	)
+	if response in ('Y', 'y', ''):
+		print('Installing Node packages for linting and formatting...')
+		subprocess.run(['npm', 'install'], cwd=project_path, check=True)
+
+
 def main():
 	if not TEMPLATE_DIR.is_dir():
-		raise ValueError(f'{TEMPLATE_DIR} directory is missing or is not a directory')
+		raise ValueError(f"{TEMPLATE_DIR} directory is missing or is not a directory")
 
 	if not TEMPLATE_CONFIG_PATH.is_file():
-		raise ValueError(f'{TEMPLATE_CONFIG_PATH} directory is missing or is not a file')
+		raise ValueError(f"{TEMPLATE_CONFIG_PATH} directory is missing or is not a file")
 
+	config = json.load(TEMPLATE_CONFIG_PATH.open('r'))
 	context = ask_for_details()
 	context['CURRENT_DATE_Y_m_d'] = datetime.now().strftime("%Y-%m-%d")
-	context.update(json.load(TEMPLATE_CONFIG_PATH.open('r')))
+	context.update(config)
 
 	new_project_path = SCRIPT_DIR.parent / context['APP_NAME']
 	if new_project_path.exists():
@@ -153,6 +165,13 @@ def main():
 	engine.register_logic('ifset', lambda key, ctx: len(ctx.get(key, '')) > 0)
 	engine.register_logic('ifunset', lambda key, ctx: len(ctx.get(key, '')) == 0)
 	engine.render_files_recursive(TEMPLATE_DIR, new_project_path, context, ignore_paths=IGNORE_FILE_AND_DIRS)
+
+	ask_and_install_node_packages(new_project_path)
+	install_deps(config)
+	git_setup(new_project_path, context)
+
+	print(f"\nProject created at: '{new_project_path}'")
+	print('Make sure to setup proper metadata, desktop entry, and Code Of Conduct contact info!')
 
 
 if __name__ == '__main__':
