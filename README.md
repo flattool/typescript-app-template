@@ -5,13 +5,16 @@
 This template serves as a base for new apps, and ensures that all future apps follow a similar directory structure and codebase.
 
 ## Usage
+
+**You will need Python >= 3.6 for this!**
+
 ```bash
 # Clone this repo and enter it
 git clone https://github.com/flattool/typescript-app-template
 cd typescript-app-template
 
 # Create a new project
-./create_project.py
+python create_app.py
 ```
 After filling out the details, new directory with the app name will be made in this project's parent directory. Then, `cd` to that newly made directory and run `./run.sh`.
 
