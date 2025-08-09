@@ -1,9 +1,8 @@
-from typing import Callable, List, Dict, Tuple
-from typing_extensions import Literal
+from typing import Callable, List, Dict, Set, Tuple, Iterable
 from pathlib import Path
 import re
 
-Token = Tuple[Literal['text', 'var', 'logic_start', 'logic_end'], str]
+Token = Tuple[str, str]
 LogicHandler = Callable[[str, Dict[str, str]], bool]
 
 LOGIC_END = '{{/}}'
@@ -26,7 +25,7 @@ class TemplateEngine:
 		template = template.replace("}}}}", ESCAPE_CLOSE)
 
 		if re.search(r'{{/\w+}}', template):
-			raise ValueError(f'Only {LOGIC_END} is permitted as a block closing tag.')
+			raise ValueError(f"Only {LOGIC_END} is permitted as a block closing tag.")
 
 		tokens = self._tokenize(template)
 		output, _ = self._parse(tokens, context)
@@ -37,12 +36,24 @@ class TemplateEngine:
 		return output
 
 
-	def render_files_recursive(self, template_root: Path, output_root: Path, context: Dict[str, str]):
+	def render_files_recursive(self,
+		template_root: Path,
+		output_root: Path,
+		context: Dict[str, str],
+		*,
+		ignore_paths: Iterable[str] = (),
+	):
+		ignores_set: Set[Path] = set(map(lambda ignore: Path(ignore), ignore_paths))
+
 		for file_path in template_root.rglob('*'):
 			if not file_path.is_file():
 				continue
 
 			relative_path = file_path.relative_to(template_root)
+
+			if any(map(lambda path: relative_path == path or path in relative_path.parents, ignores_set)):
+				continue
+
 			rendered_rel_path = self._render_path_parts(relative_path, context)
 			output_path = output_root / rendered_rel_path
 			output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -56,13 +67,13 @@ class TemplateEngine:
 		for part in relative.parts:
 			rendered = self.render(part, context)
 			if not rendered:
-				raise ValueError(f'Rendered path component is empty (from {part!r})')
+				raise ValueError(f"Rendered path component is empty (from {part!r})")
 
 			if rendered in ('.', '..'):
-				raise ValueError(f'Invalid rendered path component: {rendered!r}')
+				raise ValueError(f"Invalid rendered path component: {rendered!r}")
 
 			if '/' in rendered or '\\' in rendered:
-				raise ValueError(f'Path component contains separator: {rendered!r}')
+				raise ValueError(f"Path component contains separator: {rendered!r}")
 
 			rendered_parts.append(rendered)
 
@@ -86,12 +97,12 @@ class TemplateEngine:
 			if match.start() > pos:
 				tokens.append(('text', template[pos : match.start()]))
 
-			if (func_name := match.group(1)) and (func_arg := match.group(2)):
-				tokens.append(('logic_start', f'{func_name}:{func_arg}'))
+			if match.group(1) and match.group(2):
+				tokens.append(('logic_start', f"{match.group(1)}:{match.group(2)}"))
 			elif match.group(0) == LOGIC_END:
 				tokens.append(('logic_end', ''))
-			elif text := match.group(3):
-				tokens.append(('var', text))
+			elif match.group(3):
+				tokens.append(('var', match.group(3)))
 
 			pos = match.end()
 
@@ -121,7 +132,7 @@ class TemplateEngine:
 				logic_name, key = value.split(':', 1)
 				handler = self._logic_handlers.get(logic_name)
 				if handler is None:
-					raise ValueError(f'No handler registered for logic: {logic_name}')
+					raise ValueError(f"No handler registered for logic: {logic_name}")
 
 				index += 1
 				inner_content, index = self._parse(tokens, context, index)
@@ -132,3 +143,8 @@ class TemplateEngine:
 				return output, index + 1
 
 		return output, index
+
+
+if __name__ == "__main__":
+	print('You must run create_app.py, not me!')
+	exit(1)
