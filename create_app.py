@@ -10,10 +10,10 @@ SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_DIR = SCRIPT_PATH.parent
 TEMPLATE_DIR = SCRIPT_DIR / "template"
 TEMPLATE_CONFIG_PATH = SCRIPT_DIR / "TEMPLATE_CONFIG.json"
-IGNORE_FILE_AND_DIRS = (
+IGNORE_FILE_AND_DIRS = [
 	"node_modules",
 	"package-lock.json",
-)
+]
 REGEXES = {
 	'No Slashes': re.compile(r'^[^/\\]+$'),
 	'File Path': re.compile("^(?![.])[A-Za-z0-9!#$%&()*+,\\-.:<=>?[\\]^_{}|~]+$"),
@@ -22,6 +22,7 @@ REGEXES = {
 	),
 	'App ID': re.compile('^(?:[a-zA-Z0-9_]+\\.){2,}[a-zA-Z0-9_-]+$'),
 	'Email': re.compile('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$'),
+	'Yes or No or empty': re.compile('^[YyNn]?$'),
 }
 
 def get_input(
@@ -68,11 +69,17 @@ def ask_for_details() -> Dict[str, str]:
 		regex=REGEXES['URL'],
 	)
 	developer_name = get_input("Enter developer's name")
+	include_coc: bool = get_input(
+		'Does this project follow the GNOME Code of Conduct? [Y|n]',
+		regex=REGEXES['Yes or No or empty'],
+	) in ('Y', 'y', '')
+	if not include_coc:
+		IGNORE_FILE_AND_DIRS.append('CODE_OF_CONDUCT.md')
 
 	# Optionals
 	developer_email = get_input(
 		"Enter developer's email address",
-		is_optional=True,
+		is_optional=not include_coc,
 		err_message='Response must be a valid email address',
 		regex=REGEXES['Email'],
 	)
@@ -92,6 +99,7 @@ def ask_for_details() -> Dict[str, str]:
 		'DEVELOPER_EMAIL': developer_email,
 		'DONATION_LINK': donation_link,
 		'GIT_REPO': git_repo,
+		'INCLUDE_COC': 'yes' if include_coc else '',
 		'CURRENT_DATE_Y_m_d': datetime.now().strftime("%Y-%m-%d"),
 	}
 
@@ -133,7 +141,7 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 def ask_and_install_node_packages(project_path: Path):
 	response = get_input(
 		'Install Node packages for formatting and linting? [Y|n]',
-		regex=re.compile('^[YyNn]?$'),
+		regex=REGEXES['Yes or No or empty'],
 	)
 	if response in ('Y', 'y', ''):
 		print('Installing Node packages for linting and formatting...')
@@ -166,7 +174,7 @@ def main():
 	git_setup(new_project_path, context)
 
 	print(f"\nProject created at: '{new_project_path}'")
-	print('Make sure to setup proper metadata, desktop entry, and Code Of Conduct contact info!')
+	print('Make sure to setup proper metadata, README info, and desktop entry items!')
 
 
 if __name__ == '__main__':

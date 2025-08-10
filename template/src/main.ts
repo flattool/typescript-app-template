@@ -25,7 +25,7 @@ export class Application extends Adw.Application {
 			application_icon: pkg.app_id,
 			developer_name: "{{DEVELOPER_NAME}}",
 			version: pkg.version,
-			developers: ["{{DEVELOPER_NAME}} <{{DEVELOPER_EMAIL}}>"],
+			developers: ["{{DEVELOPER_NAME}}{{#ifset DEVELOPER_EMAIL}} <{{DEVELOPER_EMAIL}}>{{/}}"],
 			copyright: "© 2025 {{DEVELOPER_NAME}}",
 		}).present(this.active_window)
 	}
