@@ -20,7 +20,7 @@ After filling out the details, new directory with the app name will be made in t
 
 ## ESLint
 
-The template will create an NPM project in the new app's project directory, and then run `npm install` for the project. This, of course, requires that `npm` is installed on your system. If you do not wish to use ESLint, then you do not need `npm` at all.
+The template will create an NPM project in the new app's project directory, and then optionally runs `npm install` for the project. This, of course, requires that `npm` is installed on your system. If you do not wish to use ESLint, then you do not need `npm` at all.
 
 ## Configuration
 
