@@ -134,8 +134,7 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 def ask_and_install_node_packages(project_path: Path):
 	response = get_input(
 		'Install Node packages for formatting and linting? [Y|n]',
-		is_optional=True,
-		regex=re.compile('^[YyNn]$'),
+		regex=re.compile('^[YyNn]?$'),
 	)
 	if response in ('Y', 'y', ''):
 		print('Installing Node packages for linting and formatting...')

@@ -1,2 +1,1 @@
-- Fix input message for install types
 - Make optional things actually optional
