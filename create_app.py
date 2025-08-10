@@ -62,6 +62,11 @@ def ask_for_details() -> Dict[str, str]:
 		),
 		regex=REGEXES['App ID'],
 	)
+	git_repo = get_input(
+		'Enter Git repository URL (repo does not need to exist yet)',
+		err_message='Response must be a valid URL',
+		regex=REGEXES['URL'],
+	)
 	developer_name = get_input("Enter developer's name")
 
 	# Optionals
@@ -73,12 +78,6 @@ def ask_for_details() -> Dict[str, str]:
 	)
 	donation_link = get_input(
 		"Enter developer's donation link",
-		is_optional=True,
-		err_message='Response must be a valid URL',
-		regex=REGEXES['URL'],
-	)
-	git_repo = get_input(
-		'Enter Git repository URL (repo does not need to exist yet)',
 		is_optional=True,
 		err_message='Response must be a valid URL',
 		regex=REGEXES['URL'],

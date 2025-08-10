@@ -20,8 +20,8 @@
 	<url type="homepage">{{GIT_REPO}}</url>
 	<url type="vcs-browser">{{GIT_REPO}}</url>
 	<url type="bugtracker">{{GIT_REPO}}/issues</url>
-	<url type="donation">{{GIT_REPO}}</url>
-	<url type="contribute">{{GIT_REPO}}</url>
+	{{#ifset DONATION_LINK}}<url type="donation">{{DONATION_LINK}}</url>
+	{{/}}<url type="contribute">{{GIT_REPO}}</url>
 
 	<branding>
 		<color type="primary" scheme_preference="light">#ffffff</color>
