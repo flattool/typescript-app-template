@@ -1,4 +1,0 @@
-- Make GNOME COC optional
-- Make optional things actually optional
-	- [x] Dev Donation Link
-	- [ ] Dev Email (only optional when no COC)
