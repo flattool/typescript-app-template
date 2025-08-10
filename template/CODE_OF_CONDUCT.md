@@ -1,7 +1,7 @@
 # {{APP_TITLE}} Code of Conduct
 The {{APP_TITLE}} project follows the [GNOME Code of Conduct](https://conduct.gnome.org/). A short summary of it goes like this:
 
-The {{APP_TITLE}} project is dedicated to provitding a positive experience to everyone, and does not accept inappropriate behaviour such as discrimination and hateful speech. We encourage everyone to keep a friendly tone, and to be constructive and civil.
+The {{APP_TITLE}} project is dedicated to providing a positive experience to everyone, and does not accept inappropriate behaviour such as discrimination and hateful speech. We encourage everyone to keep a friendly tone, and to be constructive and civil.
 
 ## Reporting an Incident
 If you believe someone is Violating the Code of Conduct, or have any other concerns, please contact lead developer {{DEVELOPER_NAME}} over [email](mailto:{{DEVELOPER_EMAIL}}).
