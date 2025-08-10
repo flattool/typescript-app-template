@@ -25,9 +25,9 @@ def find_translation_files():
 
     # Manually add in non-src files to be translated
     translation_files += [
-        "data/<TEMPLATE:APPID>.desktop.in",
-        "data/<TEMPLATE:APPID>.metainfo.xml.in",
-        "data/<TEMPLATE:APPID>.gschema.xml",
+        "data/{{APP_ID}}.desktop.in",
+        "data/{{APP_ID}}.metainfo.xml.in",
+        "data/{{APP_ID}}.gschema.xml",
     ]
 
     translation_files = sorted(translation_files)

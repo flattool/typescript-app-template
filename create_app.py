@@ -88,11 +88,12 @@ def ask_for_details() -> Dict[str, str]:
 		'APP_NAME': app_name,
 		'APP_TITLE': app_title,
 		'APP_ID': app_id,
-		'APP_ID_AS_APTH': app_id.replace('.', '/'),
+		'APP_ID_AS_PATH': app_id.replace('.', '/'),
 		'DEVELOPER_NAME': developer_name,
 		'DEVELOPER_EMAIL': developer_email,
 		'DONATION_LINK': donation_link,
 		'GIT_REPO': git_repo,
+		'CURRENT_DATE_Y_m_d': datetime.now().strftime("%Y-%m-%d"),
 	}
 
 
@@ -150,7 +151,6 @@ def main():
 
 	config = json.load(TEMPLATE_CONFIG_PATH.open('r'))
 	context = ask_for_details()
-	context['CURRENT_DATE_Y_m_d'] = datetime.now().strftime("%Y-%m-%d")
 	context.update(config)
 
 	new_project_path = SCRIPT_DIR.parent / context['APP_NAME']

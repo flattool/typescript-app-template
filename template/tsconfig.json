@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		// <!!> REQUIRED FOR THE APP TO FUNCTION <!!>
-		"target": "ES<TEMPLATE:ECMA_VERSION>",
-		"module": "ES<TEMPLATE:ECMA_VERSION>",
-		"lib": ["ES<TEMPLATE:ECMA_VERSION>"],
+		"target": "ES{{ECMA_VERSION}}",
+		"module": "ES{{ECMA_VERSION}}",
+		"lib": ["ES{{ECMA_VERSION}}"],
 		"allowJs": true,
 		"outDir": "_build/tsc-out",
 		"moduleResolution": "node",

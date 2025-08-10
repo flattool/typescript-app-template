@@ -2,7 +2,7 @@ name: 📊 Static Checks
 on: [push, pull_request]
 
 concurrency:
-    group: ci-${{ github.actor }}-${{ github.head_ref || github.run_number }}-${{ github.ref }}-static
+    group: ci-${{{{ github.actor }}}}-${{{{ github.head_ref || github.run_number }}}}-${{{{ github.ref }}}}-static
 
 jobs:
     static-checks:
@@ -32,4 +32,5 @@ jobs:
 
           - name: XML validation via xmllint
             run: |
-                xmllint --nout data/<TEMPLATE:APPID>.gschema.xml data/<TEMPLATE:APPID>.metainfo.xml.in src/<TEMPLATE:APPID>.data.gresource.xml src/<TEMPLATE:APPID>.src.gresource.xml
+                xmllint --nout data/{{APP_ID}}.gschema.xml data/{{APP_ID}}.metainfo.xml.in src/{{APP_ID}}.data.gresource.xml src/{{APP_ID}}.src.gresource.xml
+

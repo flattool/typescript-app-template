@@ -56,8 +56,8 @@ bin_conf.set('PACKAGE_NAME', meson.project_name())
 bin_conf.set('prefix', get_option('prefix'))
 bin_conf.set('libdir', get_option('prefix') / get_option('libdir'))
 bin_conf.set('datadir', get_option('prefix') / get_option('datadir'))
-bin_conf.set('resource_path', '<TEMPLATE:APPID.as_path>')
-bin_conf.set('APP_ID', '<TEMPLATE:APPID>')
+bin_conf.set('resource_path', '{{APP_ID_AS_PATH}}')
+bin_conf.set('APP_ID', '{{APP_ID}}')
 
 bin_conf.set('PROFILE', profile)
 if get_option('profile') == 'development'
@@ -68,8 +68,8 @@ else
 endif
 
 data_res = gnome.compile_resources(
-	'<TEMPLATE:APPID>.data',
-	'<TEMPLATE:APPID>.data.gresources.xml',
+	'{{APP_ID}}.data',
+	'{{APP_ID}}.data.gresources.xml',
 	gresource_bundle: true,
 	install: true,
 	install_dir: pkgdatadir,
@@ -77,8 +77,8 @@ data_res = gnome.compile_resources(
 )
 
 configure_file(
-	input: '<TEMPLATE:APPID>.in',
-	output: '<TEMPLATE:APPID>',
+	input: '{{APP_ID}}.in',
+	output: '{{APP_ID}}',
 	configuration: bin_conf,
 	install: true,
 	install_dir: get_option('bindir'),

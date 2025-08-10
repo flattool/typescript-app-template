@@ -1,4 +1,4 @@
-application_id = '<TEMPLATE:APPID>'
+application_id = '{{APP_ID}}'
 
 scalable_dir = join_paths('hicolor', 'scalable', 'apps')
 install_data(

@@ -1,13 +1,13 @@
-# <TEMPLATE:APP_TITLE> Code of Conduct
-The <TEMPLATE:APP_TITLE> project follows the [GNOME Code of Conduct](https://conduct.gnome.org/). A short summary of it goes like this:
+# {{APP_TITLE}} Code of Conduct
+The {{APP_TITLE}} project follows the [GNOME Code of Conduct](https://conduct.gnome.org/). A short summary of it goes like this:
 
-The <TEMPLATE:APP_TITLE> project is dedicated to provitding a positive experience to everyone, and does not accept inappropriate behaviour such as discrimination and hateful speech. We encourage everyone to keep a friendly tone, and to be constructive and civil.
+The {{APP_TITLE}} project is dedicated to provitding a positive experience to everyone, and does not accept inappropriate behaviour such as discrimination and hateful speech. We encourage everyone to keep a friendly tone, and to be constructive and civil.
 
 ## Reporting an Incident
-If you believe someone is Violating the Code of Conduct, or have any other concerns, please contact lead developer <TEMPLATE:DEVELOPER_NAME> over [email](mailto:<TEMPLATE:DEVELOPER_EMAIL>).
+If you believe someone is Violating the Code of Conduct, or have any other concerns, please contact lead developer {{DEVELOPER_NAME}} over [email](mailto:{{DEVELOPER_EMAIL}}).
 
 ## Our Standards
-The <TEMPLATE:APP_TITLE> project is dedicated to providing a positive experience for everyone, regardless of:
+The {{APP_TITLE}} project is dedicated to providing a positive experience for everyone, regardless of:
 
 * age
 * body size
@@ -48,7 +48,7 @@ Examples of behavior that contributes to creating a positive environment include
 
 Community members asked to stop any inappropriate behavior are expected to comply immediately.
 
-We want all participants in the <TEMPLATE:APP_TITLE> project to have the best possible experience they can. In order to be clear about what that means, we’ve provided a list of examples of behaviors that are inappropriate for the <TEMPLATE:APP_TITLE> project:
+We want all participants in the {{APP_TITLE}} project to have the best possible experience they can. In order to be clear about what that means, we’ve provided a list of examples of behaviors that are inappropriate for the {{APP_TITLE}} project:
 
 * Deliberate intimidation, stalking, or following.
 * Sustained disruption of online discussions, talks, or other events. Sustained disruption of events, online discussions, or meetings, including talks and presentations, will not be tolerated. This includes ‘Talking over’ or ‘heckling’ event speakers or influencing crowd actions that cause hostility in event sessions. Sustained disruption also includes drinking alcohol to excess or using recreational drugs to excess, or pushing others to do so.
@@ -61,7 +61,7 @@ We want all participants in the <TEMPLATE:APP_TITLE> project to have the best po
 * Possession of an offensive weapon at a GNOME event. This includes anything deemed to be a weapon by the event organizers.
 
 ### Safety versus Comfort
-The <TEMPLATE:APP_TITLE> project prioritizes marginalized people’s safety over privileged people’s comfort, for example in situations involving:
+The {{APP_TITLE}} project prioritizes marginalized people’s safety over privileged people’s comfort, for example in situations involving:
 
 * “Reverse”-isms, including “reverse racism,” “reverse sexism,” and “cisphobia”
 * Reasonable communication of boundaries, such as “leave me alone,” “go away,” or “I’m not discussing this with you.”
@@ -74,7 +74,7 @@ Outreach and diversity efforts directed at under-represented groups are permitte
 
 Basic expectations for conduct are not covered by the “reverse-ism clause” and would be enforced irrespective of the demographics of those involved. For example, racial discrimination will not be tolerated, irrespective of the race of those involved. Nor would unwanted sexual attention be tolerated, whatever someone’s gender or sexual orientation. Members of our community have the right to expect that participants in the project will uphold these standards.
 
-If a participant engages in behavior that violates this code of conduct, the <TEMPLATE:APP_TITLE> maintainers may take any action they deem appropriate.
+If a participant engages in behavior that violates this code of conduct, the {{APP_TITLE}} maintainers may take any action they deem appropriate.
 
 ## Attribution
 This Code of Conduct is licensed under a [CC BY-SA 3.0 License](creativecommons.org/licenses/by-sa/3.0/), and is forked from the [GNOME CoC](https://wiki.gnome.org/Foundation/CodeOfConduct)

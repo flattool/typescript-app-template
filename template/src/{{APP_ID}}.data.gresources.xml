@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <gresources>
-	<gresource prefix="/<TEMPLATE:APPID.as_path>">
-		<file preprocess="xml-stripblanks" alias="appdata">../data/<TEMPLATE:APPID>.metainfo.xml</file>
+	<gresource prefix="/{{APP_ID_AS_PATH}}">
+		<file preprocess="xml-stripblanks" alias="appdata">../data/{{APP_ID}}.metainfo.xml</file>
 		<file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
 		<file preprocess="xml-stripblanks">window/main_window.ui</file>
 	</gresource>
-	<gresource prefix="/<TEMPLATE:APPID.as_path>/icons/scalable/actions/">
+	<gresource prefix="/{{APP_ID_AS_PATH}}/icons/scalable/actions/">
 		<!-- <file preprocess="xml-stripblanks" alias="example:paper-symbolic.svg">../data/icons/paper-symbolic.svg</file> -->
 	</gresource>
 </gresources>

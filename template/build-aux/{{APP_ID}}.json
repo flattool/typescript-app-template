@@ -1,13 +1,13 @@
 {
-	"id": "<TEMPLATE:APPID>",
+	"id": "{{APP_ID}}",
 	"runtime": "org.gnome.Platform",
-	"runtime-version": "<TEMPLATE:RUNTIME_VERSION>",
+	"runtime-version": "{{RUNTIME_VERSION}}",
 	"sdk": "org.gnome.Sdk",
 	"sdk-extensions": ["org.freedesktop.Sdk.Extension.typescript", "org.freedesktop.Sdk.Extension.node20"],
 	"build-options": {
 		"append-path": "/usr/lib/sdk/node20/bin:/usr/lib/sdk/typescript/bin"
 	},
-	"command": "<TEMPLATE:APPID>",
+	"command": "{{APP_ID}}",
 	"finish-args": ["--share=ipc", "--socket=fallback-x11", "--device=dri", "--socket=wayland"],
 	"cleanup": [
 		"/include",
@@ -28,13 +28,13 @@
 				{
 					"type": "git",
 					"url": "https://gitlab.gnome.org/jwestman/blueprint-compiler",
-					"tag": "<TEMPLATE:BLUEPRINT_COMPILER_TAG>"
+					"tag": "{{BLUEPRINT_COMPILER_TAG}}"
 				}
 			],
 			"cleanup": ["*"]
 		},
 		{
-			"name": "<TEMPLATE:APP_NAME>",
+			"name": "{{APP_NAME}}",
 			"builddir": true,
 			"buildsystem": "meson",
 			"config-opts": ["-Dprofile=development"],
