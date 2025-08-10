@@ -1,3 +1,2 @@
 - Fix input message for install types
-- Delete existing folder for new project if it exists
 - Make optional things actually optional

@@ -156,10 +156,7 @@ def main():
 	new_project_path = SCRIPT_DIR.parent / context['APP_NAME']
 	if new_project_path.exists():
 		print(f"\nDirectory at '{new_project_path.absolute()}' already exists!")
-		response = input("<!!> Overwrite this file or directory? <!!> ('Yes' to OVERWRITE): ")
-		if response != 'Yes':
-			print("Aborting...")
-			return
+		return
 
 	engine = TemplateEngine()
 	engine.register_logic('ifset', lambda key, ctx: len(ctx.get(key, '')) > 0)
