@@ -5,19 +5,22 @@
 This template serves as a base for new apps, and ensures that all future apps follow a similar directory structure and codebase.
 
 ## Usage
+
+**You will need Python >= 3.6 for this!**
+
 ```bash
 # Clone this repo and enter it
 git clone https://github.com/flattool/typescript-app-template
 cd typescript-app-template
 
 # Create a new project
-./create_project.py
+python create_app.py
 ```
 After filling out the details, new directory with the app name will be made in this project's parent directory. Then, `cd` to that newly made directory and run `./run.sh`.
 
 ## ESLint
 
-The template will create an NPM project in the new app's project directory, and then run `npm install` for the project. This, of course, requires that `npm` is installed on your system. If you do not wish to use ESLint, then you do not need `npm` at all.
+The template will create an NPM project in the new app's project directory, and then optionally runs `npm install` for the project. This, of course, requires that `npm` is installed on your system. If you do not wish to use ESLint, then you do not need `npm` at all.
 
 ## Configuration
 

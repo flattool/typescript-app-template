@@ -5,9 +5,10 @@ import Gtk from "gi://Gtk?version=4.0"
 
 import { PropertyHelpers, AllPropertyTypes, PropertyConfigFor } from "./property_helpers.js"
 
-type AtleaseOneOf<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> & {
-	[K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>
-}[Keys]
+type AtleaseOneOf<T> = (T extends any
+	? { [K in keyof T]-?: Required<Pick<T, K>> & Partial<Omit<T, K>> }[keyof T]
+	: never
+)
 
 type KeysWithType<T, V> = {
 	[K in keyof T]: T[K] extends V ? K : never

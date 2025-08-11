@@ -21,12 +21,12 @@ export class Application extends Adw.Application {
 	@GObjectify.SimpleAction()
 	protected about(): void {
 		new Adw.AboutDialog({
-			application_name: "<TEMPLATE:APP_TITLE>",
+			application_name: "{{APP_TITLE}}",
 			application_icon: pkg.app_id,
-			developer_name: "<TEMPLATE:DEVELOPER_NAME>",
+			developer_name: "{{DEVELOPER_NAME}}",
 			version: pkg.version,
-			developers: ["<TEMPLATE:DEVELOPER_NAME> <<TEMPLATE:DEVELOPER_EMAIL>>"],
-			copyright: "© 2025 <TEMPLATE:DEVELOPER_NAME>",
+			developers: ["{{DEVELOPER_NAME}}{{#ifset DEVELOPER_EMAIL}} <{{DEVELOPER_EMAIL}}>{{/}}"],
+			copyright: "© 2025 {{DEVELOPER_NAME}}",
 		}).present(this.active_window)
 	}
 

@@ -3,7 +3,7 @@ import Adw from "gi://Adw?version=1"
 
 import { GObjectify } from "../utils/gobjectify.js"
 
-@GObjectify.Class({ template: "/<TEMPLATE:APPID.as_path>/window/main_window" })
+@GObjectify.Class({ template: "/{{APP_ID_AS_PATH}}/window/main_window" })
 export class MainWindow extends Adw.ApplicationWindow {
 	protected readonly settings = new Gio.Settings({ schema_id: pkg.app_id })
 

@@ -2,7 +2,7 @@ using Gtk 4.0;
 using Adw 1;
 
 template $MainWindow: Adw.ApplicationWindow {
-	title: _("<TEMPLATE:APP_TITLE>");
+	title: _("{{APP_TITLE}}");
 
 	content: Adw.ToolbarView toolbar_view {
 		[top]
@@ -17,7 +17,7 @@ template $MainWindow: Adw.ApplicationWindow {
 		}
 
 		content: Adw.StatusPage status_page {
-			icon-name: "<TEMPLATE:APPID>";
+			icon-name: "{{APP_ID}}";
 			title: bind template.title;
 			description: _("Flattool template default description");
 		};
@@ -28,6 +28,6 @@ menu primary_menu {
 	section {
 		item (_("_Preferences"), "app.preferences")
 		item (_("Keyboard Shortcuts"), "win.show-help-overlay")
-		item (_("_About <TEMPLATE:APP_TITLE>"), "app.about")
+		item (_("_About {{APP_TITLE}}"), "app.about")
 	}
 }

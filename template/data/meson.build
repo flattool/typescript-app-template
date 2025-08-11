@@ -1,6 +1,6 @@
 desktop_file = i18n.merge_file(
-	input: '<TEMPLATE:APPID>.desktop.in',
-	output: '<TEMPLATE:APPID>.desktop',
+	input: '{{APP_ID}}.desktop.in',
+	output: '{{APP_ID}}.desktop',
 	type: 'desktop',
 	po_dir: '../po',
 	install: true,
@@ -13,11 +13,11 @@ if desktop_utils.found()
 endif
 
 appstream_file = i18n.merge_file(
-	input: '<TEMPLATE:APPID>.metainfo.xml.in',
-	output: '<TEMPLATE:APPID>.metainfo.xml',
+	input: '{{APP_ID}}.metainfo.xml.in',
+	output: '{{APP_ID}}.metainfo.xml',
 	po_dir: '../po',
 	install: true,
-	install_dir: get_option('datadir') / 'metainfo'
+	install_dir: get_option('datadir') / 'metainfo',
 )
 
 appstreamcli = find_program('appstreamcli', required: false, disabler: true)
@@ -28,7 +28,7 @@ test(
 )
 
 install_data(
-	'<TEMPLATE:APPID>.gschema.xml',
+	'{{APP_ID}}.gschema.xml',
 	install_dir: get_option('datadir') / 'glib-2.0' / 'schemas',
 )
 
@@ -46,10 +46,10 @@ test(
 service_conf = configuration_data()
 service_conf.set('bindir', get_option('prefix') / get_option('bindir'))
 configure_file(
-	input: '<TEMPLATE:APPID>.service.in',
-	output: '<TEMPLATE:APPID>.service',
+	input: '{{APP_ID}}.service.in',
+	output: '{{APP_ID}}.service',
 	configuration: service_conf,
-	install_dir: get_option('datadir') / 'dbus-1' / 'services'
+	install_dir: get_option('datadir') / 'dbus-1' / 'services',
 )
 
 subdir('icons')
