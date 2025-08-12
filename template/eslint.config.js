@@ -124,7 +124,7 @@ export default defineConfig([
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				ecmaVersion: <TEMPLATE:ECMA_VERSION>,
+				ecmaVersion: {{ECMA_VERSION}},
 				sourceType: "module",
 				project: "./tsconfig.json",
 			},
