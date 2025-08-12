@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Credit: https://gitlab.gnome.org/World/Upscaler/-/blob/main/update_translation.sh?ref_type=heads
 
-export PROJECT_NAME="<TEMPLATE:APP_NAME>"
+export PROJECT_NAME="{{APP_NAME}}"
 export BUILD_DIR="translation-build/"
 export PO_DIR="po/"
 export LINGUAS_FILE="${PO_DIR}LINGUAS"
