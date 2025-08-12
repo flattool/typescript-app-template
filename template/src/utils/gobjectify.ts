@@ -10,10 +10,6 @@ type AtleaseOneOf<T> = (T extends any
 	: never
 )
 
-type KeysWithType<T, V> = {
-	[K in keyof T]: T[K] extends V ? K : never
-}[keyof T]
-
 type DissAllowConstantInFlags<T> = (T extends { flags?: infer F }
 	? F extends string
 		? "CONSTANT" extends F
@@ -122,20 +118,15 @@ export class GObjectify {
 		}
 	}
 
-	public static CustomProp<
-		T extends GObject.Object,
-		U extends AllPropertyTypes,
-		V extends T[W],
-		W extends KeysWithType<T, V>,
-	>(
+	public static CustomProp<T extends GObject.Object, U extends AllPropertyTypes, V>(
 		prop_type: U,
 		config?: AtleaseOneOf<
 			DissAllowConstantInFlags<PropertyConfigFor<U>> & {
-				initializable_backing_field?: W | (string & {}),
+				initializable_backing_field?: string,
 			}
 		>,
 	) {
-		const backing_field: W | string | undefined = (config && "initializable_backing_field" in config
+		const backing_field: string | undefined = (config && "initializable_backing_field" in config
 			? config.initializable_backing_field
 			: undefined
 		)
@@ -178,9 +169,8 @@ export class GObjectify {
 			| ((this: T, action: Gio.SimpleAction)=> any)
 			| ((this: T, action: Gio.SimpleAction, value: GLib.Variant)=> any)
 		),
-		K extends KeysWithType<T, Gio.SimpleAction>,
 	>(params?: AtleaseOneOf<SimpleAction & {
-		save_to?: K,
+		save_to?: string,
 		accels?: T extends Gtk.Application ? string[] : never,
 	}>) {
 		const { save_to, accels, ...config } = params ?? {}
