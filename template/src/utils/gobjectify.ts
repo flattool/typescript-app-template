@@ -19,9 +19,7 @@ type DissAllowConstantInFlags<T> = (T extends { flags?: infer F }
 	: T
 )
 
-type GClass<T extends GObject.Object & { $ready?: ()=> void | Promise<void> }> = (new (
-	...args: any[]
-)=> T) & { $gtype: GObject.GType }
+type GClass<T extends GObject.Object> = (new (...args: any[])=> T) & { $gtype: GObject.GType }
 
 type Spec = {
 	name: string,
@@ -37,7 +35,7 @@ type Signal = {
 
 type SimpleAction = Omit<Partial<Gio.SimpleAction.ConstructorProps>, "name">
 
-type ClassDecoratorParams = AtleaseOneOf<{
+type ClassDecoratorParams<T extends GObject.Object> = AtleaseOneOf<{
 	template?: string,
 	implements?: { $gtype: GObject.GType }[],
 	css_name?: string,
@@ -45,6 +43,7 @@ type ClassDecoratorParams = AtleaseOneOf<{
 	manual_gtype_name?: string,
 	manual_properties?: Record<string, GObject.ParamSpec>,
 	manual_internal_children?: string[],
+	ready: (this: T)=> (void | Promise<void>),
 }>
 
 const signals_map = new WeakMap<Function, Record<string, Signal>>()
@@ -121,9 +120,7 @@ export class GObjectify {
 	public static CustomProp<T extends GObject.Object, U extends AllPropertyTypes, V>(
 		prop_type: U,
 		config?: AtleaseOneOf<
-			DissAllowConstantInFlags<PropertyConfigFor<U>> & {
-				initializable_backing_field?: string,
-			}
+			DissAllowConstantInFlags<PropertyConfigFor<U>> & { initializable_backing_field?: string }
 		>,
 	) {
 		const backing_field: string | undefined = (config && "initializable_backing_field" in config
@@ -259,9 +256,7 @@ export class GObjectify {
 		}
 	}
 
-	public static Class<T extends GObject.Object & { $ready?: ()=> void | Promise<void> }>(
-		params?: ClassDecoratorParams,
-	) {
+	public static Class<T extends GObject.Object>(params?: ClassDecoratorParams<T>) {
 		return (target: GClass<T>, _context: ClassDecoratorContext): void => {
 			const prototype = target.prototype
 			const children: string[] = []
@@ -278,9 +273,7 @@ export class GObjectify {
 					specs[prop_spec.name] = prop_spec.spec
 				}
 			}
-			if (params?.manual_internal_children) {
-				params.manual_internal_children.forEach((item) => children.push(item))
-			}
+			children.push(...params?.manual_internal_children ?? [])
 			GObject.registerClass({
 				...(params?.template && { Template: `resource://${params.template}.ui` }),
 				GTypeName: params?.manual_gtype_name || target.name,
@@ -295,13 +288,13 @@ export class GObjectify {
 			}, target)
 			signals_map.delete(target)
 
-			const ready = target.prototype.$ready
+			const ready = params?.ready
 			if (typeof ready !== "function") return
-			const original_init = target.prototype._init
-			target.prototype._init = function (...args: any): any {
+			const original_init = prototype._init
+			prototype._init = function (...args: any): any {
 				const original_return_val = original_init?.apply(this, args)
 				GLib.idle_add(GLib.PRIORITY_DEFAULT, () => {
-					const on_error = (e: any): void => {
+					const on_error = (e: unknown): void => {
 						print(`Error in $ready function for ${target.name}`)
 						print(e)
 					}
