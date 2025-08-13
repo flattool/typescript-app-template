@@ -26,7 +26,8 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"skipLibCheck": true,
-		"strict": true
+		"strict": true,
+		"verbatimModuleSyntax": true
 	},
 	"include": ["gi-types/gi.d.ts", "types/ambient.d.ts", "src/"]
 }

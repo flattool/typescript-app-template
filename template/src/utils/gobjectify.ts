@@ -3,7 +3,7 @@ import GObject from "gi://GObject?version=2.0"
 import Gio from "gi://Gio?version=2.0"
 import Gtk from "gi://Gtk?version=4.0"
 
-import { PropertyHelpers, AllPropertyTypes, PropertyConfigFor } from "./property_helpers.js"
+import { PropertyHelpers, type AllPropertyTypes, type PropertyConfigFor } from "./property_helpers.js"
 
 type AtleaseOneOf<T> = (T extends any
 	? { [K in keyof T]-?: Required<Pick<T, K>> & Partial<Omit<T, K>> }[keyof T]
