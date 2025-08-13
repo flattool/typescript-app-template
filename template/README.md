@@ -3,10 +3,10 @@
 
 PUT PROJECT SPECIFIC ITEMS DETAILS HERE
 
-{{#ifset INCLUDE_COC}}## 📜 Code of Conduct
+{{#ifset INCLUDE_COC}}## Code of Conduct
 - The Ignition project follows the [GNOME Code of Conduct](https://conduct.gnome.org/). See `CODE_OF_CONDUCT.md` for more information.
 
-{{/}}## 👥 Contributing
+{{/}}## Contributing
 ### Compiling from Source
 
 Make sure `flatpak` and `git` are installed, then run the following to build from the repo:
