@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import json
 from template_engine import TemplateEngine
+from typing import Dict, Optional, Pattern, Callable
+from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Optional, Pattern
-import re, subprocess
+import re, subprocess, json
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_DIR = SCRIPT_PATH.parent
@@ -17,9 +17,6 @@ IGNORE_FILE_AND_DIRS = [
 REGEXES = {
 	'No Slashes': re.compile(r'^[^/\\]+$'),
 	'File Path': re.compile("^(?![.])[A-Za-z0-9!#$%&()*+,\\-.:<=>?[\\]^_{}|~]+$"),
-	'URL': re.compile(
-		'((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)'
-	),
 	'App ID': re.compile('^(?:[a-zA-Z0-9_]+\\.){2,}[a-zA-Z0-9_-]+$'),
 	'Email': re.compile('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$'),
 	'Yes or No or empty': re.compile('^[YyNn]?$'),
@@ -31,6 +28,7 @@ def get_input(
 	is_optional: bool = False,
 	err_message: str = 'Invalid input',
 	regex: Optional[Pattern[str]] = None,
+	test_func: Callable[[str], bool] = lambda _param: True,
 ) -> str:
 	message += (' (leave blank to ignore)' if is_optional else '') + ': '
 	while True:
@@ -39,13 +37,19 @@ def get_input(
 		if is_optional and response == '':
 			return ''
 
-		if regex:
-			if regex.fullmatch(response):
-				return response
-		elif len(response) > 0:
+		if (
+			len(response) > 0 # must have something
+			and test_func(response) # must pass test_func
+			and (not regex or regex.fullmatch(response)) # must pass regex if regex exists
+		):
 			return response
 
 		print('. '.join((err_message, 'Please try again...')))
+
+
+def validate_url(url: str) -> bool:
+	parsed = urlparse(url)
+	return parsed.scheme in ('http', 'https') and bool(parsed.netloc)
 
 
 def ask_for_details() -> Dict[str, str]:
@@ -66,7 +70,7 @@ def ask_for_details() -> Dict[str, str]:
 	git_repo = get_input(
 		'Enter Git repository URL (repo does not need to exist yet)',
 		err_message='Response must be a valid URL',
-		regex=REGEXES['URL'],
+		test_func=validate_url,
 	)
 	developer_name = get_input("Enter developer's name")
 	include_coc: bool = get_input(
@@ -87,7 +91,7 @@ def ask_for_details() -> Dict[str, str]:
 		"Enter developer's donation link",
 		is_optional=True,
 		err_message='Response must be a valid URL',
-		regex=REGEXES['URL'],
+		test_func=validate_url,
 	)
 
 	return {
