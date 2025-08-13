@@ -38,8 +38,8 @@ def get_input(
 			return ''
 
 		if (
-			len(response) > 0 # must have something
-			and test_func(response) # must pass test_func
+			test_func(response) # must pass test_func
+			and (regex and len(response) > 0) # if regex isn't passed, at least make sure the string has a char
 			and (not regex or regex.fullmatch(response)) # must pass regex if regex exists
 		):
 			return response
