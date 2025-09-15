@@ -37,13 +37,16 @@ def get_input(
 		if is_optional and response == '':
 			return ''
 
-		if (
+		is_response_valid = (
 			test_func(response) # must pass test_func
-			and (regex and len(response) > 0) # if regex isn't passed, at least make sure the string has a char
-			and (not regex or regex.fullmatch(response)) # must pass regex if regex exists
-		):
+			and (not regex or bool(regex.fullmatch(response))) # must match regex if regex is supplied
+			and len(response) > 0 # must have at least one character
+		)
+
+		if is_response_valid:
 			return response
 
+		# response was not valid, print this error
 		print('. '.join((err_message, 'Please try again...')))
 
 
