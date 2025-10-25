@@ -163,9 +163,9 @@ export class PropertyHelpers {
 			name,
 			nick,
 			blurb,
-			string_to_flag(flags) as unknown as string,
+			string_to_flag(flags),
 			type.$gtype,
-		)
+		) as any
 	}
 
 	public static g_enum<T extends GEnum<any>>(

@@ -129,15 +129,6 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 
 	print('Initializing Git repo...')
 	subprocess.run(['git', 'init', '-b', 'main'], cwd=project_path, check=True)
-	print('Adding and initializing gi-types submodule...')
-	subprocess.run([
-		'git', 'submodule', 'add',
-		'-b', 'nightly',
-		'--name', 'gi-types',
-		'https://gitlab.gnome.org/BrainBlasted/gi-typescript-definitions',
-		'gi-types',
-	], cwd=project_path, check=True)
-	print('Adding template as first commit...')
 	subprocess.run(['git', 'add', '.'], cwd=project_path, check=True)
 	subprocess.run([
 		'git', 'commit',
