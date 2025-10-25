@@ -4,7 +4,7 @@ from typing import Dict, Optional, Pattern, Callable
 from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
-import re, subprocess, json
+import re, subprocess, json, shutil
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_DIR = SCRIPT_PATH.parent
@@ -30,7 +30,7 @@ def get_input(
 	regex: Optional[Pattern[str]] = None,
 	test_func: Callable[[str], bool] = lambda _param: True,
 ) -> str:
-	message += (' (leave blank to ignore)' if is_optional else '') + ': '
+	message += ': '
 	while True:
 		response = input(message).strip()
 
@@ -79,19 +79,20 @@ def ask_for_details() -> Dict[str, str]:
 	include_coc: bool = get_input(
 		'Does this project follow the GNOME Code of Conduct? [Y|n]',
 		regex=REGEXES['Yes or No or empty'],
+		is_optional=True,
 	) in ('Y', 'y', '')
 	if not include_coc:
 		IGNORE_FILE_AND_DIRS.append('CODE_OF_CONDUCT.md')
 
 	# Optionals
 	developer_email = get_input(
-		"Enter developer's email address",
+		f"Enter developer's email address{'' if include_coc else ' (leave blank to ignore)'}",
 		is_optional=not include_coc,
 		err_message='Response must be a valid email address',
 		regex=REGEXES['Email'],
 	)
 	donation_link = get_input(
-		"Enter developer's donation link",
+		"Enter developer's donation link (leave blank to ignore)",
 		is_optional=True,
 		err_message='Response must be a valid URL',
 		test_func=validate_url,
@@ -137,9 +138,14 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 
 
 def ask_and_install_node_packages(project_path: Path):
+	if shutil.which("npm") == None:
+		print("'npm' not found, skipping the install of linting and formatting packages")
+		return
+
 	response = get_input(
 		'Install Node packages for formatting and linting? [Y|n]',
 		regex=REGEXES['Yes or No or empty'],
+		is_optional=True,
 	)
 	if response in ('Y', 'y', ''):
 		print('Installing Node packages for linting and formatting...')
