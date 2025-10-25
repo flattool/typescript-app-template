@@ -118,7 +118,7 @@ def install_deps(config: Dict[str, str]):
 		'org.flatpak.Builder',
 		f"org.gnome.Sdk//{config['RUNTIME_VERSION']}",
 		f"org.gnome.Platform//{config['RUNTIME_VERSION']}",
-		f"org.freedesktop.Sdk.Extension.node20//{config['TS_NODE_RUNTIME_VERSION']}",
+		f"org.freedesktop.Sdk.Extension.node{config['NODE_VERSION']}//{config['TS_NODE_RUNTIME_VERSION']}",
 		f"org.freedesktop.Sdk.Extension.typescript//{config['TS_NODE_RUNTIME_VERSION']}",
 	], check=True)
 
