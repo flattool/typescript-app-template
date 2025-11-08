@@ -251,7 +251,7 @@ declare function beforeEach(...args: any[]): any
 ## While building locally
 Simply run the `run.sh` script. Tests will be run automatically before your app runs.
 ## In a CI pipeline
-Use the Flatpak GitHub Action to trigger tests. See [the resources](#resource-and-further-reading) for more details.
+Use the Flatpak GitHub Action to trigger tests. See [the resources](#resources-and-further-reading) for more details.
 # Test-Driven-Development
 A common technique is to first make the unit tests for a particular object THEN write the actual object, in a very hacky way at first, then refactor while keeping an eye on the success rate of the test so that you don't introduce regressions
 
