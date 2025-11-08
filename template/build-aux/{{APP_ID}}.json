@@ -25,6 +25,18 @@
 	],
 	"modules": [
 		{
+			"name": "jasmine-gjs",
+			"buildsystem": "meson",
+			"sources": [
+				{
+					"type": "git",
+					"url": "https://github.com/ptomato/jasmine-gjs.git",
+					"branch": "master"
+				}
+			],
+			"cleanup": ["*"]
+		},
+		{
 			"name": "{{APP_NAME}}",
 			"builddir": true,
 			"buildsystem": "meson",
@@ -34,7 +46,9 @@
 					"type": "dir",
 					"path": "../"
 				}
-			]
+			],
+			"run-tests": true,
+			"test-rule": "test"
 		}
 	]
 }

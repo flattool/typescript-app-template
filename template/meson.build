@@ -15,7 +15,10 @@ tsc = find_program('tsc', required: true)
 subdir('data')
 subdir('src')
 subdir('po')
-
+if get_option('tests')
+  jasmine = find_program('jasmine')
+  subdir('tests')
+endif
 gnome.post_install(
 	glib_compile_schemas: true,
 	gtk_update_icon_cache: true,

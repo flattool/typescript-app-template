@@ -9,7 +9,7 @@
 		"moduleResolution": "node",
 		"baseUrl": ".",
 		"paths": {
-			"*": ["*", "types/*", "gi-types/*"]
+			"*": ["*", "types/*", "gi-types/*", "tests/sources/*"]
 		},
 		"typeRoots": ["gi-types"],
 		"forceConsistentCasingInFileNames": true,
@@ -29,5 +29,5 @@
 		"strict": true,
 		"verbatimModuleSyntax": true
 	},
-	"include": ["gi-types/gi.d.ts", "types/ambient.d.ts", "src/"]
+	"include": ["gi-types/gi.d.ts", "types/ambient.d.ts", "src/","tests/sources/*"]
 }
