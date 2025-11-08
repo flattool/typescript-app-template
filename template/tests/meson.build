@@ -5,7 +5,7 @@ test_deps=[
 ]
 
 unit_tests = {
-    'doubly_linked_list_test': {}
+    'example_test': {}
 }
 
 tests = custom_target(
