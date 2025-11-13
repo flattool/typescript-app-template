@@ -261,7 +261,7 @@ A common technique is to first make the unit tests for a particular object THEN 
 3. Refactor
 4. Run tests again
 5. If any anciliary tests fail, fix the bugs, then go to step 3 until the code structure looks good
-# Commonm errors
+# Common errors
 | Problem                                    | Solution                                                                                                                                                                       |
 |--------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | Tests don't run                            | Check your `tests/meson.build` file and make sure the affected test is added to the dictionary. Make sure that the run-tests variable in the flatpak manifest is set to `true` and make sure meson setup has the `-Dtests=true` option given to it.|
