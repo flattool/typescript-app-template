@@ -192,8 +192,17 @@ def main():
 	install_deps(config)
 	git_setup(new_project_path, config)
 
-	print(f"\nProject created at: '{new_project_path}'")
-	print('Make sure to setup proper metadata, README info, and desktop entry items!')
+	print("Building initial build...")
+	subprocess.run([
+		'flatpak', 'run', 'org.flatpak.Builder',
+		'--user', '--force-clean', '_build',
+		f"build-aux/{context['APP_ID']}.json"
+	], cwd=new_project_path, check=True)
+
+	print("\n=== [ DONE ] ===")
+	print(f"  Project created at: '{new_project_path}'")
+	print('  Make sure to setup proper metadata, README info, and desktop entry items!')
+	print("================")
 
 
 if __name__ == '__main__':
