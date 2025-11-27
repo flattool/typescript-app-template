@@ -124,12 +124,26 @@ def install_deps(config: Dict[str, str]):
 	], check=True)
 
 
-def git_setup(project_path: Path):
+def git_setup(project_path: Path, config: Dict[str, str]):
 	if not project_path.is_dir():
 		raise ValueError(f"Project Path '{project_path.absolute()} is missing or is not a directory")
 
 	print('Initializing Git repo...')
 	subprocess.run(['git', 'init', '-b', 'main'], cwd=project_path, check=True)
+	print('Setting up submodules...')
+	subprocess.run([
+		'git', 'submodule', 'add',
+		'-b', f"sdk-v{config['RUNTIME_VERSION']}",
+		'https://github.com/flattool/gobjectify.git',
+		'src/gobjectify',
+	], cwd=project_path, check=True)
+	subprocess.run([
+		'git', 'submodule', 'add',
+		'-b', f"sdk-v{config['RUNTIME_VERSION']}",
+		'https://github.com/flattool/gir-ts-types.git',
+		'gi-types',
+	], cwd=project_path, check=True)
+	print('Adding initial commit...')
 	subprocess.run(['git', 'add', '.'], cwd=project_path, check=True)
 	subprocess.run([
 		'git', 'commit',
@@ -173,11 +187,10 @@ def main():
 	engine.register_logic('ifunset', lambda key, ctx: len(ctx.get(key, '')) == 0)
 	engine.render_files_recursive(TEMPLATE_DIR, new_project_path, context, ignore_paths=IGNORE_FILE_AND_DIRS)
 
+	subprocess.run(["chmod", "+x", f"{new_project_path}/run.sh"], check=True)
 	ask_and_install_node_packages(new_project_path)
 	install_deps(config)
-	git_setup(new_project_path)
-
-	subprocess.run(["chmod", "+x", f"{new_project_path}/run.sh"], check=True)
+	git_setup(new_project_path, config)
 
 	print(f"\nProject created at: '{new_project_path}'")
 	print('Make sure to setup proper metadata, README info, and desktop entry items!')

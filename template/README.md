@@ -15,6 +15,9 @@ Make sure `flatpak` and `git` are installed, then run the following to build fro
 git clone {{GIT_REPO}}
 cd {{APP_NAME}}
 
+# Initialize submodules
+git submodule update --init --recursive
+
 # Install build dependencies
 flatpak install org.flatpak.Builder org.gnome.Sdk//{{RUNTIME_VERSION}} org.gnome.Platform//{{RUNTIME_VERSION}} org.freedesktop.Sdk.Extension.typescript//{{TS_NODE_RUNTIME_VERSION}} org.freedesktop.Sdk.Extension.node{{NODE_VERSION}}//{{TS_NODE_RUNTIME_VERSION}} -y
 
