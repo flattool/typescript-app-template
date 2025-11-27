@@ -1,7 +1,6 @@
 .DS_Store
 .flatpak
 .flatpak-builder
-.idea
 .vscode
 .zed
 __pycache__
