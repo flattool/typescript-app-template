@@ -2,8 +2,8 @@ import { defineConfig } from "eslint/config"
 import tsParser from "@typescript-eslint/parser"
 import tsPlugin from "@typescript-eslint/eslint-plugin"
 import stylistic from "@stylistic/eslint-plugin"
-import jsoncParser from "jsonc-eslint-parser"
 import eslintPluginJsonc from "eslint-plugin-jsonc"
+import importPlugin from "eslint-plugin-import"
 
 // Rules that apply to both JS and TS
 const sharedJsTsRules = {
@@ -92,6 +92,20 @@ const sharedJsTsRules = {
 	"@stylistic/type-generic-spacing": "error",
 	"@stylistic/type-named-tuple-spacing": "error",
 
+	// Require module imports to be relative and end in `.js`, to make GNOME JS happy
+	"import/extensions": ["error", "always", { ignorePackages: true }],
+	"no-restricted-imports": [
+		"error",
+		{
+			patterns: [
+				{
+					group: ["src/*", "test/*"],
+					message: "Use relative imports that end in `.js` instead!",
+				},
+			],
+		},
+	],
+
 	"object-shorthand": ["error", "always"],
 	"no-case-declarations": "error",
 }
@@ -103,10 +117,12 @@ export default defineConfig([
 			"**/*.d.ts",
 			"**/__pycache__",
 			"_build",
+			".flatpak-builder",
 			"node_modules",
 			"package.json",
 			"package-lock.json",
 			"gi-types",
+			"src/gobjectify/**",
 		],
 	},
 	{
@@ -115,7 +131,7 @@ export default defineConfig([
 		languageOptions: {
 			parserOptions: { sourceType: "module" },
 		},
-		plugins: { "@stylistic": stylistic },
+		plugins: { "@stylistic": stylistic, import: importPlugin },
 		rules: { ...sharedJsTsRules },
 	},
 	{
@@ -124,16 +140,16 @@ export default defineConfig([
 		languageOptions: {
 			parser: tsParser,
 			parserOptions: {
-				ecmaVersion: {{ECMA_VERSION}},
+				ecmaVersion: 2022,
 				sourceType: "module",
 				project: "./tsconfig.json",
 			},
 		},
-		plugins: { "@typescript-eslint": tsPlugin, "@stylistic": stylistic },
+		plugins: { "@typescript-eslint": tsPlugin, "@stylistic": stylistic, import: importPlugin },
 		rules: {
 			...sharedJsTsRules,
 			"@typescript-eslint/explicit-function-return-type": "error",
-			"@typescript-eslint/explicit-member-accessibility": ["error", { accessibility: "explicit" }],
+			"@typescript-eslint/explicit-member-accessibility": ["error", { accessibility: "no-public" }],
 		},
 	},
 	// JSON (default from JSONC)
@@ -142,7 +158,7 @@ export default defineConfig([
 		// JSON (adding on to JSONC)
 		files: ["**/*.json", "**/*.json.in"],
 		languageOptions: {
-			parser: jsoncParser,
+			parser: eslintPluginJsonc,
 		},
 		rules: {
 			"jsonc/array-bracket-newline": "error",
