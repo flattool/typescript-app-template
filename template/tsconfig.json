@@ -1,9 +1,9 @@
 {
 	"compilerOptions": {
 		// <!!> REQUIRED FOR THE APP TO FUNCTION <!!>
-		"target": "ES{{ECMA_VERSION}}",
-		"module": "ES{{ECMA_VERSION}}",
-		"lib": ["ES{{ECMA_VERSION}}"],
+		"target": "ES2022",
+		"module": "ES2022",
+		"lib": ["ES2022"],
 		"allowJs": true,
 		"outDir": "_build/tsc-out",
 		"moduleResolution": "node",
@@ -23,7 +23,6 @@
 		"noImplicitReturns": true,
 		"noPropertyAccessFromIndexSignature": true,
 		"noUncheckedIndexedAccess": true,
-		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"skipLibCheck": true,
 		"strict": true,
