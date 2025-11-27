@@ -1,0 +1,12 @@
+[MASTER]
+init-hook='import sys; sys.path.append(".")'
+
+[FORMAT]
+indent-string=\t
+max-line-length=120
+
+[DESIGN]
+defining-attr-methods=__init__
+
+[MESSAGES CONTROL]
+disable=missing-module-docstring,missing-class-docstring,missing-function-docstring,singleton-comparison,multiple-imports

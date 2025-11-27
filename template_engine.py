@@ -1,6 +1,6 @@
+import re, sys
 from typing import Callable, List, Dict, Set, Tuple, Iterable
 from pathlib import Path
-import re
 
 Token = Tuple[str, str]
 LogicHandler = Callable[[str, Dict[str, str]], bool]
@@ -8,6 +8,39 @@ LogicHandler = Callable[[str, Dict[str, str]], bool]
 LOGIC_END = '{{/}}'
 ESCAPE_OPEN = '\0FLATTOOL_TEMPLATE_ENGINE_ESCAPE_OPEN\0'
 ESCAPE_CLOSE = '\0FLATTOOL_TEMPLATE_ENGINE_ESCAPE_CLOSE\0'
+
+
+def _tokenize(template: str) -> List[Token]:
+	pattern = re.compile(
+		r'\{\{#(\w+)\s+(\w+)}}|' + re.escape(LOGIC_END) + r'|\{\{(\w+)}}',
+		re.DOTALL,
+	)
+	pos = 0
+	tokens: List[Token] = []
+
+	# Regex Group                  [0,  1,  2,  3]
+	# Variable:    {{var}}         [{{var}},  None,  None,  'var']
+	# Logic start: {{#ifdef var}}  [{{#ifdef}},  'ifdef',  'var',  None]
+	# Logic end:   LOGIC_END       [LOGIC_END,  None,  None,  None]
+
+	for match in pattern.finditer(template):
+		if match.start() > pos:
+			tokens.append(('text', template[pos : match.start()]))
+
+		if match.group(1) and match.group(2):
+			tokens.append(('logic_start', f"{match.group(1)}:{match.group(2)}"))
+		elif match.group(0) == LOGIC_END:
+			tokens.append(('logic_end', ''))
+		elif match.group(3):
+			tokens.append(('var', match.group(3)))
+
+		pos = match.end()
+
+	if pos < len(template):
+		tokens.append(('text', template[pos :]))
+
+	return tokens
+
 
 class TemplateEngine:
 	_logic_handlers: Dict[str, LogicHandler]
@@ -27,7 +60,7 @@ class TemplateEngine:
 		if re.search(r'{{/\w+}}', template):
 			raise ValueError(f"Only {LOGIC_END} is permitted as a block closing tag.")
 
-		tokens = self._tokenize(template)
+		tokens = _tokenize(template)
 		output, _ = self._parse(tokens, context)
 
 		output = output.replace(ESCAPE_OPEN, "{{")
@@ -43,7 +76,7 @@ class TemplateEngine:
 		*,
 		ignore_paths: Iterable[str] = (),
 	):
-		ignores_set: Set[Path] = set(map(lambda ignore: Path(ignore), ignore_paths))
+		ignores_set: Set[Path] = set(map(Path, ignore_paths))
 
 		for file_path in template_root.rglob('*'):
 			if not file_path.is_file():
@@ -51,7 +84,7 @@ class TemplateEngine:
 
 			relative_path = file_path.relative_to(template_root)
 
-			if any(map(lambda path: relative_path == path or path in relative_path.parents, ignores_set)):
+			if any(map(lambda path, rp=relative_path: rp == path or path in rp.parents, ignores_set)):
 				continue
 
 			rendered_rel_path = self._render_path_parts(relative_path, context)
@@ -78,38 +111,6 @@ class TemplateEngine:
 			rendered_parts.append(rendered)
 
 		return Path(*rendered_parts)
-
-
-	def _tokenize(self, template: str) -> List[Token]:
-		pattern = re.compile(
-			r'\{\{#(\w+)\s+(\w+)\}\}|' + re.escape(LOGIC_END) + r'|\{\{(\w+)\}\}',
-			re.DOTALL,
-		)
-		pos = 0
-		tokens: List[Token] = []
-
-		# Regex Group                  [0,  1,  2,  3]
-		# Variable:    {{var}}         [{{var}},  None,  None,  'var']
-		# Logic start: {{#ifdef var}}  [{{#ifdef}},  'ifdef',  'var',  None]
-		# Logic end:   LOGIC_END       [LOGIC_END,  None,  None,  None]
-
-		for match in pattern.finditer(template):
-			if match.start() > pos:
-				tokens.append(('text', template[pos : match.start()]))
-
-			if match.group(1) and match.group(2):
-				tokens.append(('logic_start', f"{match.group(1)}:{match.group(2)}"))
-			elif match.group(0) == LOGIC_END:
-				tokens.append(('logic_end', ''))
-			elif match.group(3):
-				tokens.append(('var', match.group(3)))
-
-			pos = match.end()
-
-		if pos < len(template):
-			tokens.append(('text', template[pos :]))
-
-		return tokens
 
 
 	def _parse(self,
@@ -147,4 +148,4 @@ class TemplateEngine:
 
 if __name__ == "__main__":
 	print('You must run create_app.py, not me!')
-	exit(1)
+	sys.exit(1)

@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-from template_engine import TemplateEngine
+import re, subprocess, json, shutil
 from typing import Dict, Optional, Pattern, Callable
 from urllib.parse import urlparse
 from datetime import datetime
 from pathlib import Path
-import re, subprocess, json, shutil
+from template_engine import TemplateEngine
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_DIR = SCRIPT_PATH.parent
@@ -124,7 +124,7 @@ def install_deps(config: Dict[str, str]):
 	], check=True)
 
 
-def git_setup(project_path: Path, config: Dict[str, str]):
+def git_setup(project_path: Path):
 	if not project_path.is_dir():
 		raise ValueError(f"Project Path '{project_path.absolute()} is missing or is not a directory")
 
@@ -175,7 +175,7 @@ def main():
 
 	ask_and_install_node_packages(new_project_path)
 	install_deps(config)
-	git_setup(new_project_path, context)
+	git_setup(new_project_path)
 
 	print(f"\nProject created at: '{new_project_path}'")
 	print('Make sure to setup proper metadata, README info, and desktop entry items!')
