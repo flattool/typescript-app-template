@@ -6,6 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/template/.idea" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.14 (typescript-app-template)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
