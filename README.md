@@ -16,7 +16,7 @@ cd typescript-app-template
 # Create a new project
 python create_app.py
 ```
-After filling out the details, new directory with the app name will be made in this project's parent directory. Then, `cd` to that newly made directory and run `./run.sh`.
+After filling out the details, a new directory with the app name will be made in this project's parent directory. Then, `cd` to that newly made directory and run `./run.sh`.
 
 ## ESLint
 
