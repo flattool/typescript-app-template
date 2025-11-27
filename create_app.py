@@ -177,6 +177,8 @@ def main():
 	install_deps(config)
 	git_setup(new_project_path)
 
+	subprocess.run(["chmod", "+x", f"{new_project_path}/run.sh"], check=True)
+
 	print(f"\nProject created at: '{new_project_path}'")
 	print('Make sure to setup proper metadata, README info, and desktop entry items!')
 
