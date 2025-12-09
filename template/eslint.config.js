@@ -116,6 +116,7 @@ export default defineConfig([
 			"**/.*",
 			"**/*.d.ts",
 			"**/__pycache__",
+			"**/gobjectify",
 			"_build",
 			".flatpak-builder",
 			"node_modules",
