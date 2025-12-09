@@ -172,4 +172,14 @@ export default defineConfig([
 			"jsonc/object-property-newline": "error",
 		},
 	},
+    {
+		// Allow comments in TSConfig
+		files: ["**tsconfig.json"],
+		languageOptions: {
+			parser: eslintPluginJsonc,
+		},
+		rules: {
+			"jsonc/no-comments": ["off"],
+		},
+	},
 ])
