@@ -1,1 +1,1 @@
-i18n.gettext('ignition', preset: 'glib')
+i18n.gettext('{{APP_NAME}}', preset: 'glib')
