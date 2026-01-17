@@ -37,7 +37,10 @@ export class Application extends from(Adw.Application, {
 			Language: ${lang}
 		`
 
-		const dialog = Adw.AboutDialog.new_from_appdata("/{{APP_ID_AS_PATH}}/appdata", null)
+		const dialog = Adw.AboutDialog.new_from_appdata(
+			"/{{APP_ID_AS_PATH}}/appdata",
+			pkg.version.split(".dev")[0] ?? null,
+		)
 		dialog.version = pkg.version
 		dialog.debug_info = troubleshooting
 		{{#ifset DONATION_LINK}}dialog.add_link(_("Donate"), "{{DONATION_LINK}}")
