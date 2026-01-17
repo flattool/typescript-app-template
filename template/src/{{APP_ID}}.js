@@ -1,0 +1,1 @@
+/home/heliguy/Projects/typescript-app-template/template/src/{{APP_ID}}.in

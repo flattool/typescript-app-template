@@ -5,19 +5,21 @@ project(
 	default_options: ['warning_level=2', 'werror=false'],
 )
 
-i18n = import('i18n')
+blueprint_compiler = find_program('blueprint-compiler')
 gnome = import('gnome')
-
-profile = get_option('profile')
-
+i18n = import('i18n')
+python = find_program('python3')
 tsc = find_program('tsc', required: true)
+
+pkgdatadir = get_option('datadir') / meson.project_name()
+profile = get_option('profile')
 
 subdir('data')
 subdir('src')
 subdir('po')
 if get_option('tests')
-  jasmine = find_program('jasmine')
-  subdir('tests')
+	jasmine = find_program('jasmine')
+	subdir('tests')
 endif
 gnome.post_install(
 	glib_compile_schemas: true,
