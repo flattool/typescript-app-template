@@ -1,8 +1,8 @@
+# Ignore .flatpak/ build dir and .flatpak built bundles
+*.flatpak
+
 .DS_Store
-.flatpak
 .flatpak-builder
-.vscode
-.zed
 __pycache__
 _build
 node_modules
