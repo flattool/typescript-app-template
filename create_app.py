@@ -188,6 +188,7 @@ def main():
 	engine.render_files_recursive(TEMPLATE_DIR, new_project_path, context, ignore_paths=IGNORE_FILE_AND_DIRS)
 
 	subprocess.run(["chmod", "+x", f"{new_project_path}/run.sh"], check=True)
+	subprocess.run(["chmod", "+x", f"{new_project_path}/bundle.sh"], check=True)
 	ask_and_install_node_packages(new_project_path)
 	install_deps(config)
 	git_setup(new_project_path, config)
