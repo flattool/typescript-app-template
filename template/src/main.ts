@@ -8,7 +8,7 @@ import { MainWindow } from "./window/main_window.js"
 
 @GClass({ manual_gtype_name: "Gjs_Application" })
 export class Application extends from(Adw.Application, {
-	_quit: SimpleAction({ accels: ["<primary>q"] }),
+	quit_app: SimpleAction({ accels: ["<primary>q"] }),
 	about: SimpleAction(),
 }) {
 	#main_window?: MainWindow
@@ -18,7 +18,7 @@ export class Application extends from(Adw.Application, {
 	}
 
 	_ready(): void {
-		this._quit.connect("activate", () => this.quit())
+		this.quit_app.connect("activate", () => this.quit())
 	}
 
 	@OnSimpleAction("about")
