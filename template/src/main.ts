@@ -29,7 +29,7 @@ export class Application extends from(Adw.Application, {
 		const lang = GLib.environ_getenv(GLib.get_environ(), "LANG")
 		const troubleshooting = dedent`
 			OS: ${os_string}
-			an-app version: ${pkg.version}
+			{{APP_NAME}} version: ${pkg.version}
 			GTK: ${gtk_version}
 			libadwaita: ${adw_version}
 			App ID: ${pkg.app_id}
