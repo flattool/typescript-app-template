@@ -11,7 +11,12 @@
 		"append-path": "/usr/lib/sdk/node{{NODE_VERSION}}/bin:/usr/lib/sdk/typescript/bin"
 	},
 	"command": "{{APP_ID}}",
-	"finish-args": ["--share=ipc", "--socket=fallback-x11", "--device=dri", "--socket=wayland"],
+	"finish-args": [
+		"--share=ipc",
+		"--socket=fallback-x11",
+		"--device=dri",
+		"--socket=wayland"
+	],
 	"cleanup": [
 		"/include",
 		"/lib/pkgconfig",
