@@ -3,7 +3,6 @@
 	<id>{{APP_ID}}</id>
 	<launchable type="desktop-id">{{APP_ID}}.desktop</launchable>
 	<metadata_license>CC0-1.0</metadata_license>
-	<project_license>GPL-3.0-or-later</project_license>
 	<translation type="gettext">{{APP_NAME}}</translation>
 	<content_rating type="oars-1.1" />
 
