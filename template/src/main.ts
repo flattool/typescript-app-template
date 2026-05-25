@@ -14,11 +14,13 @@ export class Application extends from(Adw.Application, {
 	#main_window?: MainWindow
 
 	override vfunc_activate(): void {
-		(this.#main_window ??= new MainWindow({ application: this })).present()
+		this.#main_window ??= new MainWindow({ application: this })
+		this.#main_window.present()
 	}
 
-	_ready(): void {
-		this.quit_app.connect("activate", () => this.quit())
+	constructor(params?: typeof Application.$params) {
+		super(params)
+		this.quit_app.$connect("activate", () => this.quit())
 	}
 
 	@OnSimpleAction("about")

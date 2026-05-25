@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import re, subprocess, json, shutil
+import re, subprocess, json, shutil, requests
 from typing import Dict, Optional, Pattern, Callable
 from urllib.parse import urlparse
 from datetime import datetime
@@ -66,7 +66,7 @@ def ask_for_details() -> Dict[str, str]:
 		'Enter application ID (e.g: org.website.MyApp)',
 		err_message=(
 			'App ID must exist, contain 2 periods, be alphanumeric, cannot start nor end with a period,'
-	 		+ ' and can only contain hyphens (-) in the last part'
+			+ ' and can only contain hyphens (-) in the last part'
 		),
 		regex=REGEXES['App ID'],
 	)
@@ -124,6 +124,25 @@ def install_deps(config: Dict[str, str]):
 	], check=True)
 
 
+def get_latest_gobjectify(project_path: Path):
+	if not project_path.is_dir():
+		raise ValueError(f"Project Path '{project_path.absolute()} is missing or is not a directory")
+
+	print("Downloading GObjectify...")
+	tag_response = requests.get("https://api.github.com/repos/flattool/gobjectify/releases/latest")
+	tag_response.raise_for_status()
+	tag = tag_response.json()["tag_name"]
+	download_url = f"https://github.com/flattool/gobjectify/releases/download/{tag}"
+	files = { "gobjectify.js", "gobjectify.d.ts" }
+	output_dir = project_path / "src" / "gobjectify"
+	output_dir.mkdir(parents=True, exist_ok=True)
+	for file_name in files:
+		r = requests.get(f"{download_url}/{file_name}")
+		r.raise_for_status()
+		with open(output_dir / file_name, "wb") as file:
+			file.write(r.content)
+
+
 def git_setup(project_path: Path, config: Dict[str, str]):
 	if not project_path.is_dir():
 		raise ValueError(f"Project Path '{project_path.absolute()} is missing or is not a directory")
@@ -131,12 +150,6 @@ def git_setup(project_path: Path, config: Dict[str, str]):
 	print('Initializing Git repo...')
 	subprocess.run(['git', 'init', '-b', 'main'], cwd=project_path, check=True)
 	print('Setting up submodules...')
-	subprocess.run([
-		'git', 'submodule', 'add',
-		'-b', f"sdk-v{config['RUNTIME_VERSION']}",
-		'https://github.com/flattool/gobjectify.git',
-		'src/gobjectify',
-	], cwd=project_path, check=True)
 	subprocess.run([
 		'git', 'submodule', 'add',
 		'-b', f"sdk-v{config['RUNTIME_VERSION']}",
@@ -191,14 +204,8 @@ def main():
 	subprocess.run(["chmod", "+x", f"{new_project_path}/bundle.sh"], check=True)
 	ask_and_install_node_packages(new_project_path)
 	install_deps(config)
+	get_latest_gobjectify(new_project_path)
 	git_setup(new_project_path, config)
-
-	print("Building initial build...")
-	subprocess.run([
-		'flatpak', 'run', 'org.flatpak.Builder',
-		'--user', '--force-clean', '_build',
-		f"build-aux/{context['APP_ID']}.json"
-	], cwd=new_project_path, check=True)
 
 	print("\n=== [ DONE ] ===")
 	print(f"  Project created at: '{new_project_path}'")
